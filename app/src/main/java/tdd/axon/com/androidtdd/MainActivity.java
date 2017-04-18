@@ -57,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isValidAccount() {
-        return editTextUsername.getText().equals(username)
-                && editTextPassword.getText().equals(password);
+        return editTextUsername.getText().toString().equals(username)
+                && editTextPassword.getText().toString().equals(password);
     }
 
     private void mappingUI() {
@@ -71,14 +71,20 @@ public class MainActivity extends AppCompatActivity {
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isValidAccount()) {
-                    Toast.makeText(getApplicationContext(),
-                            R.string.msg_login_successfully,
-                            Toast.LENGTH_SHORT).show();
-                } else if (isUsernameOrPasswordEmpty()) {
+                if (isUsernameOrPasswordEmpty()) {
                     Toast.makeText(getApplicationContext(),
                             R.string.msg_empty_username_or_password,
                             Toast.LENGTH_SHORT).show();
+                } else {
+                    if (isValidAccount()) {
+                        Toast.makeText(getApplicationContext(),
+                                R.string.msg_login_successfully,
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(),
+                                R.string.msg_login_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

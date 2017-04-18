@@ -6,4 +6,5 @@
     <string name="password">Password</string>
     <string name="msg_empty_username_or_password">Username or password is Empty</string>
     <string name="msg_login_successfully">Login Successfully</string>
+    <string name="msg_login_failed">Username or Password is incorrect</string>
 </resources>

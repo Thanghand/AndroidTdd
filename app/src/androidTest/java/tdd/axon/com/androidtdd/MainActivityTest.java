@@ -18,8 +18,6 @@ import static org.junit.Assert.*;
 
 /**
  * Unit Test for MainActivityTest
- *
- * @author Thang Cao
  */
 
 @RunWith(AndroidJUnit4.class)
@@ -45,11 +43,6 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
         buttonLogin = (Button) activityTestRule.getActivity().findViewById(R.id.button_login);
     }
 
-    @After
-    public void tearDown() throws Exception {
-
-    }
-
     @Test
     public void testUserNameField() {
         assertNotNull(editTextUsername);
@@ -70,6 +63,7 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
 
     @Test
     public void testLoginSuccessfully() throws Throwable {
+        wait(2000);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -78,14 +72,42 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
                 buttonLogin.callOnClick();
             }
         });
+        assertTrue(solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_login_successfully))));
+    }
 
-        solo.waitForText(activityTestRule
-                .getActivity()
-                .getString(R.string.msg_login_successfully));
+    @Test
+    public void testLoginFailedWithInCorrectUserName() throws Throwable {
+        wait(2000);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                editTextUsername.setText("ThangCao");
+                editTextPassword.setText("X-happen123");
+                buttonLogin.callOnClick();
+            }
+        });
+
+        assertTrue(solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_login_failed))));
+    }
+
+    @Test
+    public void testLoginFailedWithInCorrectPassword() throws Throwable {
+        wait(2000);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                editTextUsername.setText("hcmc-x");
+                editTextPassword.setText("231312");
+                buttonLogin.callOnClick();
+            }
+        });
+
+        assertTrue(solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_login_failed))));
     }
 
     @Test
     public void testLoginFailed_Username_IsEmpty() throws Throwable {
+        wait(2000);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -94,12 +116,12 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
                 buttonLogin.callOnClick();
             }
         });
-
-        solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_empty_username_or_password)));
+        assertTrue(solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_empty_username_or_password))));
     }
 
     @Test
     public void testLoginFailed_Password_IsEmpty() throws Throwable {
+        wait(2000);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -108,11 +130,12 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
                 buttonLogin.callOnClick();
             }
         });
-        solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_empty_username_or_password)));
+        assertTrue(solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_empty_username_or_password))));
     }
 
     @Test
     public void testLoginFailed_Username_And_Password_IsEmpty() throws Throwable {
+        wait(2000);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -121,6 +144,14 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
                 buttonLogin.callOnClick();
             }
         });
-        solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_empty_username_or_password)));
+        assertTrue(solo.waitForText(activityTestRule.getActivity().getString((R.string.msg_empty_username_or_password))));
+    }
+
+    private void wait(int miliseconds) {
+        try {
+            Thread.sleep(miliseconds);
+        } catch (Exception ex) {
+
+        }
     }
 }
