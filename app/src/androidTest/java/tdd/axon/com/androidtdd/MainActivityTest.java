@@ -28,7 +28,6 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
     private Button buttonLogin;
     private EditText editTextUsername;
     private EditText editTextPassword;
-
     private Solo solo;
 
     public MainActivityTest() {
@@ -78,6 +77,7 @@ public class MainActivityTest extends ActivityTestRule<MainActivity> {
     @Test
     public void testLoginFailedWithInCorrectUserName() throws Throwable {
         wait(2000);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
